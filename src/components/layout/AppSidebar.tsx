@@ -14,7 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Shield,
-  Radar
+  Upload
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -25,6 +25,7 @@ const navItems = [
   { title: 'Work Orders', url: '/work-orders', icon: ClipboardList },
   { title: 'Approvals', url: '/approvals', icon: CheckCircle },
   { title: 'Audit Packages', url: '/audit', icon: FileArchive },
+  { title: 'Upload Documents', url: '/upload', icon: Upload },
   { title: 'AI Assistant', url: '/chat', icon: MessageSquare },
 ];
 
@@ -39,15 +40,15 @@ export function AppSidebar() {
   return (
     <motion.aside
       initial={false}
-      animate={{ width: collapsed ? 72 : 260 }}
+      animate={{ width: collapsed ? 72 : 280 }}
       transition={{ duration: 0.2, ease: 'easeInOut' }}
-      className="h-screen bg-sidebar border-r border-sidebar-border flex flex-col sticky top-0"
+      className="h-screen bg-sidebar border-r border-sidebar-border flex flex-col sticky top-0 shadow-soft"
     >
       {/* Header */}
       <div className="h-16 flex items-center px-4 border-b border-sidebar-border">
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 glow-primary">
-            <Shield className="w-5 h-5 text-primary" />
+          <div className="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center flex-shrink-0 shadow-primary-glow">
+            <Shield className="w-5 h-5 text-primary-foreground" />
           </div>
           {!collapsed && (
             <motion.div
@@ -56,8 +57,8 @@ export function AppSidebar() {
               exit={{ opacity: 0 }}
               className="flex flex-col"
             >
-              <span className="font-semibold text-foreground text-sm">AeroComply</span>
-              <span className="text-xs text-muted-foreground">Regulatory AI</span>
+              <span className="font-bold text-foreground text-base">SkyGuard AI</span>
+              <span className="text-xs text-muted-foreground">Regulatory Compliance</span>
             </motion.div>
           )}
         </div>
@@ -65,18 +66,17 @@ export function AppSidebar() {
 
       {/* Status Indicator */}
       <div className={cn(
-        "mx-3 mt-4 p-3 rounded-lg bg-secondary/50 border border-border",
+        "mx-3 mt-4 p-3 rounded-xl bg-success/10 border border-success/20",
         collapsed && "mx-2 p-2"
       )}>
         <div className="flex items-center gap-2">
           <div className="relative flex-shrink-0">
-            <Radar className="w-4 h-4 text-primary" />
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-success rounded-full animate-pulse" />
+            <div className="w-2.5 h-2.5 bg-success rounded-full status-dot-active" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
-              <span className="text-xs font-medium text-foreground">System Active</span>
-              <span className="text-[10px] text-muted-foreground">8 agents online</span>
+              <span className="text-xs font-semibold text-success">System Online</span>
+              <span className="text-[10px] text-muted-foreground">8 agents active</span>
             </div>
           )}
         </div>
@@ -86,7 +86,7 @@ export function AppSidebar() {
       <nav className="flex-1 px-3 py-4 overflow-y-auto custom-scrollbar">
         <div className="space-y-1">
           {!collapsed && (
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground px-3 mb-2 block">
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold px-3 mb-3 block">
               Main Menu
             </span>
           )}
@@ -95,11 +95,11 @@ export function AppSidebar() {
               key={item.url}
               to={item.url}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200",
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
                 "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent",
                 collapsed && "justify-center px-2"
               )}
-              activeClassName="bg-sidebar-accent text-primary font-medium shadow-glow-sm"
+              activeClassName="bg-primary/10 text-primary font-semibold border border-primary/20"
             >
               <item.icon className={cn("w-5 h-5 flex-shrink-0", collapsed && "w-5 h-5")} />
               {!collapsed && <span>{item.title}</span>}
@@ -107,9 +107,9 @@ export function AppSidebar() {
           ))}
         </div>
 
-        <div className="mt-6 space-y-1">
+        <div className="mt-8 space-y-1">
           {!collapsed && (
-            <span className="text-[10px] uppercase tracking-wider text-muted-foreground px-3 mb-2 block">
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold px-3 mb-3 block">
               System
             </span>
           )}
@@ -118,11 +118,11 @@ export function AppSidebar() {
               key={item.url}
               to={item.url}
               className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200",
+                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all duration-200",
                 "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent",
                 collapsed && "justify-center px-2"
               )}
-              activeClassName="bg-sidebar-accent text-primary font-medium"
+              activeClassName="bg-primary/10 text-primary font-semibold border border-primary/20"
             >
               <item.icon className="w-5 h-5 flex-shrink-0" />
               {!collapsed && <span>{item.title}</span>}
@@ -136,7 +136,7 @@ export function AppSidebar() {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className={cn(
-            "w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm",
+            "w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm",
             "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent transition-colors",
             collapsed && "justify-center px-2"
           )}
